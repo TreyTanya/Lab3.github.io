@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<div id="info">
-			АкулининаТВ М31с 1 вариант - Трехмерные фигуры
+			Трехмерные фигуры
 		</div>
 
 		<script type="module">
@@ -30,8 +30,8 @@
 				document.body.appendChild( container );
 
 				// CAMERA
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 8000 );
-				camera.position.set( 300, 700, 900 );
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 80000 );
+				camera.position.set( 150, 20, 400 );
 
 				// LIGHTS
 				ambientLight = new THREE.AmbientLight( 0x333333 );	// 0.2
@@ -56,7 +56,7 @@
 				controls.enableZoom = true;  
 				controls.zoomSpeed = 0.5;  
 
-				controls.minDistance = 500;
+				controls.minDistance = 50;
 				controls.maxDistance = 2500;
 				
 				controls.enableDamping = true;
@@ -70,96 +70,43 @@
 			
 
 				// scene objects
-					var x = 0;var y = 0;var z = 0;
-					//конус
-					var radiusTop = 0; var radiusBottom = 100;
-					var heigth = 150; var segments = 3;
-					var geometry = new THREE.CylinderGeometry( radiusTop, radiusBottom, heigth, segments );
-					var material = new THREE.MeshPhongMaterial( { color: 0x66ff33 } );
-					var Cylinder = new THREE.Mesh( geometry, material );
-					Cylinder.position.set( x-500, y+300, z );
-					//Cube.rotation.y = Math.PI / 6;
-					scene.add( Cylinder ); 
-					var geometry = new THREE.SphereGeometry(100, 50, 50); 
-					var material = new THREE.MeshPhongMaterial( { color: 0x1E3AC4 } );
-					var Sphere1 = new THREE.Mesh( geometry, material );
-					Sphere1.position.set( x-500, y-300, z );
-					scene.add( Sphere1 );
-
-				var textureLoader = new THREE.TextureLoader();
-				var texture = textureLoader.load( 'kot.jpg' );
-				var material = new THREE.MeshBasicMaterial( { map: texture } );
-	
-			//	var material = new THREE.MeshPhongMaterial( { color: 0x177245 } );	
-					var geometry = new THREE.BoxGeometry( 150, 150, 150 );
-					var Cube = new THREE.Mesh( geometry, material );
-					Cube.position.set( x-200, y, z );
-					//Cube.rotation.y = Math.PI / 6;
-					scene.add( Cube );				
-
-
 				
-//конус
-					var radiusTop = 0; var radiusBottom = 100;
-					var heigth = 200; var segments = 30;
-					var geometry = new THREE.CylinderGeometry( radiusTop, radiusBottom, heigth, segments );
-					var material = new THREE.MeshPhongMaterial( { color: 0x99e6ff } );
-					var Cylinder = new THREE.Mesh( geometry, material );
-					Cylinder.position.set( x+100, y, z );
-					//Cube.rotation.y = Math.PI / 6;
-					scene.add( Cylinder ); 
+				var arrowShape = new THREE.Shape();
 
-var radiusTop = 80;
-var radiusBottom = 80;
-var heigth = 190; var segments = 3;
-var geometry = new THREE.CylinderGeometry(
-radiusTop, radiusBottom, heigth, segments );
-var material = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
-var prism = new THREE.Mesh( geometry, material );
-prism.position.set( x-200, y-300, z );
-prism.rotation.x = Math.PI/-2;
-scene.add( prism );
+					( function roundedRect( ctx ){
+//ctx.moveTo( -80, 10 );
+					//ctx.lineTo( 10, 10 );
 
+					ctx.moveTo( -80, 30 );
+					ctx.lineTo( -30, -10 );
+ctx.lineTo( 20, 70 );
+ctx.lineTo( 50, 70 );
+					ctx.lineTo( -30, -30 );
+					ctx.lineTo( -80, 10 );
+					} )( arrowShape );
+							
 
-					//Цилиндр
-					var radiusTop = 50; var radiusBottom = 50;
-                                        var heigth = 150; var segments = 16;
-					var geometry = new THREE.CylinderGeometry( radiusTop, radiusBottom, heigth, segments );
-					var material = new THREE.MeshPhongMaterial( { color: 0xFF4500 } );
-					var Cylinder = new THREE.Mesh( geometry, material );
-					Cylinder.position.set( x+100, y-300, z  );
-					//Cube.rotation.y = Math.PI / 6;
-					scene.add( Cylinder );
+					var size = 10;
+					var extrudeSettings = 
+						{ 
+							depth: size, bevelSegments: 9, curveSegments: 32 
+						};
 
-					
+					var geometry = new THREE.ExtrudeGeometry( arrowShape, extrudeSettings );
+					var material = new THREE.MeshPhongMaterial({ 
+						color: 0x008000, specular: 0x708090, shininess: 20 
+					});
 
-					
-					var radiusTop = 100; var radiusBottom = 100;
-					var heigth = 150; var segments = 6;
-					
-					var geometry = new THREE.CylinderGeometry( 
-						radiusTop, radiusBottom, heigth, segments );
-						
-					var material = new THREE.MeshPhongMaterial( { color: 0xb399ff } );
-					var piramida = new THREE.Mesh( geometry, material );
-					piramida.position.set( 400, y-300, z ); 
-					//piramida.rotation.x = -Math.PI/2; 					
-					
-					scene.add( piramida );
+					var arrow_right = new THREE.Mesh( geometry, material );
+					scene.add( arrow_right );
+//var arrow_left = new THREE.Mesh( geometry, material );	
+//arrow_left.rotation.y = Math.PI;
+//arrow_left.position.set( -200, 0,  size/2 );
+//scene.add( arrow_left );
 
-				
-                       var textureLoader = new THREE.TextureLoader();
-				var texture = textureLoader.load( 'kote.png' );
-			//	var material = new THREE.MeshBasicMaterial( { map: texture } );
-	
-				var material = new THREE.MeshPhongMaterial( { color: 0xffff00 } );	
-					var geometry = new THREE.BoxGeometry( 150, 250, 150 );
-					var Cube = new THREE.Mesh( geometry, material );
-					Cube.position.set( x+400, y+200, z );
-					//Cube.rotation.y = Math.PI / 6;
-					scene.add( Cube );
-	}
 			
+
+			}
 
 			// EVENT HANDLERS
 
